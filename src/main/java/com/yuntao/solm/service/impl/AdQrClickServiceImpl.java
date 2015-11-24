@@ -14,7 +14,7 @@ import org.slf4j.Logger;
  */
 public class AdQrClickServiceImpl implements AdClickService {
 
-    Logger log = org.slf4j.LoggerFactory.getLogger(AdQrClickServiceImpl.class);
+    Logger log = org.slf4j.LoggerFactory.getLogger("bis");
 
 
     @Override

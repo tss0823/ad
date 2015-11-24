@@ -3,6 +3,8 @@ package com.yuntao.solm;
 import com.yuntao.solm.service.vo.AdType;
 import com.yuntao.solm.service.vo.AdVo;
 import com.yuntao.solm.task.AdTask;
+import com.yuntao.solm.utils.ConfigUtils;
+import com.yuntao.solm.utils.DataUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 
@@ -14,22 +16,24 @@ import java.util.concurrent.*;
  */
 public class SolmAdMain {
 
-    static Logger log = org.slf4j.LoggerFactory.getLogger(SolmAdMain.class);
+    static Logger log = org.slf4j.LoggerFactory.getLogger("bis");
 
-    private static List<AdVo> adVoList = new ArrayList<AdVo>();
+    private static String model;
 
-    static {
-        AdVo adVo = new AdVo();
-        adVo.setAdType(AdType.QR);
-        adVo.setUrl("http://www.ccdidi.com/index.html");
-        adVo.setClickWeight(2);
-        adVo.setWaitTimeWeight(5);
-        adVoList.add(adVo);
-    }
+
 
     public static void main(String[] args) {
         try{
-            log.info("start ...");
+            if(args == null){
+                throw new RuntimeException("args must not be null");
+            }
+            //获取配置文件
+            model = args[0];
+            ConfigUtils.init(model);
+            log.info("init config-"+model+" property finished!");
+
+            log.info("start ..."+model);
+
             Timer timer = new Timer();
             TimerTask timerTask = new TimerTask() {
                 @Override
@@ -56,6 +60,7 @@ public class SolmAdMain {
                         tsize = 2;
                     }
                     log.info("entry mainTask tsize="+tsize);
+
                     mainTaskRun(tsize);
                 }
             };
@@ -68,6 +73,8 @@ public class SolmAdMain {
     }
 
     public static void mainTaskRun(int tsize){
+        //动态获取执行数据
+        List<AdVo> adVoList = DataUtils.getDataList();
         log.info("get init ad list size="+adVoList.size());
         //构建task队列
         Set<AdTask> taskSet = new HashSet<AdTask>();
@@ -95,16 +102,19 @@ public class SolmAdMain {
                 }
             }
         }
-        log.info("get ad list size="+newAdVoList.size());
+        final int taskSize = newAdVoList.size();
+        log.info("get ad list size="+taskSize);
 
         //builder task
+        int index = 1;
         for(AdVo adVo : newAdVoList){
             AdTask adTask = new AdTask();
-            adTask.setId(UUID.randomUUID().toString());
+            adTask.setIndex(index);
             adTask.setAdType(adVo.getAdType());
             adTask.setUrl(adVo.getUrl());
             adTask.setOpenPageWaitTime(adVo.getWaitTimeWeight()*1000);
             taskSet.add(adTask);
+            index++;
         }
 
         //任务调度
@@ -114,7 +124,7 @@ public class SolmAdMain {
             @Override protected void terminated() {
                 super.terminated();
                 //task close
-                log.info("finish, take time = " + (System.currentTimeMillis() - startMainTime));
+                log.info("all finish, take time = " + (System.currentTimeMillis() - startMainTime));
             }
 
             @Override
@@ -125,6 +135,9 @@ public class SolmAdMain {
             @Override
             protected void afterExecute(Runnable r, Throwable t) {
                 super.afterExecute(r, t);
+                AdTask adTask  = (AdTask) r;
+                long endTime = System.currentTimeMillis();
+                log.info("task finished! result="+adTask.isSuccess()+","+adTask.getIndex()+"/"+taskSize+",takeTime="+(endTime-adTask.getStartTime()));
                 //single task finish
 
             }

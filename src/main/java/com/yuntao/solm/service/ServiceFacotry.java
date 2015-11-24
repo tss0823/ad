@@ -1,6 +1,7 @@
 package com.yuntao.solm.service;
 
 import com.yuntao.solm.service.impl.AdQrClickServiceImpl;
+import com.yuntao.solm.service.impl.AdWdClickServiceImpl;
 import com.yuntao.solm.service.impl.AdXfClickServiceImpl;
 
 import java.util.*;
@@ -16,6 +17,7 @@ public class ServiceFacotry {
     static {
         beanClsMap.put("adQrClickService", AdQrClickServiceImpl.class);
         beanClsMap.put("adXfClickService", AdXfClickServiceImpl.class);
+        beanClsMap.put("adWdClickService", AdWdClickServiceImpl.class);
     }
 
     public static synchronized Object getBean(String beanName){
