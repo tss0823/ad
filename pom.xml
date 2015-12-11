@@ -171,7 +171,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>com.yuntao.solm.nio.NIOSocketServer</mainClass>
+                                    <mainClass>com.usefullc.solm.common.proxy.nio.NIOSocketServer</mainClass>
                                     <arguments>
                                         <argument>dev</argument>
                                     </arguments>
