@@ -72,6 +72,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>2.48.2</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.1</version>
@@ -164,7 +171,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>com.yuntao.solm.SolmAdMain</mainClass>
+                                    <mainClass>com.yuntao.solm.nio.NIOSocketServer</mainClass>
                                     <arguments>
                                         <argument>dev</argument>
                                     </arguments>
