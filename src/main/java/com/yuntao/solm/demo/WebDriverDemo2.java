@@ -3,10 +3,7 @@ package com.yuntao.solm.demo;
 import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -38,8 +35,12 @@ public class WebDriverDemo2 {
 
 
 
-        WebDriver driver = new FirefoxDriver(profile);
+        WebDriver driver = new FirefoxDriver();
+//        WebDriver driver = new FirefoxDriver(profile);
 
+
+        Cookie ck = new Cookie("test111", "222222");
+        driver.manage().addCookie(ck);
 
 //        Proxy proxy = new Proxy();
 

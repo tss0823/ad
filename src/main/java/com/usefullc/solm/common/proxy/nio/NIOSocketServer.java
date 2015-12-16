@@ -7,6 +7,7 @@ package com.usefullc.solm.common.proxy.nio;
 
 import com.usefullc.solm.common.proxy.nio.handler.ReadHandler;
 import com.usefullc.solm.common.proxy.nio.parse.ReqParse;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -29,7 +30,12 @@ public class NIOSocketServer {
     public static void main(String[] args) {
         try {
             //创建proxy connect pool
-            ServerMgr.init();
+            int port = 8806;
+            String portStr = System.getProperty("port");
+            if(StringUtils.isNotEmpty(portStr)){
+                port = Integer.valueOf(portStr);
+            }
+            ServerMgr.init(port);
             //end
 
             ProxyTaskExecutor.start();  //代理线程开始

@@ -1,7 +1,7 @@
 package com.usefullc.solm.common.proxy.nio;
 
-import com.usefullc.solm.common.proxy.nio.handler.ReadHandler;
 import com.usefullc.solm.common.proxy.nio.parse.ReqParse;
+import com.usefullc.solm.common.proxy.nio.statics.ProxyStaticConnectorHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -18,7 +18,7 @@ import java.util.concurrent.*;
  */
 public class ServerMgr {
 
-    private final static int port = 8806;
+    private static int port = 8806;
 
     private static ExecutorService ec = null;
 
@@ -28,7 +28,8 @@ public class ServerMgr {
         return port;
     }
 
-    public static void init() throws IOException {
+    public static void init(int paramPort) throws IOException {
+        port = paramPort;
         ec = new ThreadPoolExecutor(5, 5, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>()) {
 
             @Override
@@ -144,7 +145,7 @@ public class ServerMgr {
                                 NioDataConfig.clearReqParse(key.toString());
                                 //System.err.println(new String(buffer.array(), 0, buffer.limit()));
 //                        clientRequest(buffer, key);   //之后这个抽出一个线程出来,目前对于慢的req卡死这这里 TODO
-                                ec.execute(new ProxyConnectorHandler(buffer, key));
+                                ec.execute(new ProxyStaticConnectorHandler(buffer, key));
 
                                 SocketContainerMgr.cancelKey(key);
 //                            key.cancel();  //及时取消，保证不被堵塞
