@@ -35,6 +35,9 @@ public class NIOSocketServer {
             ServerMgr.init(port);
             //end
 
+            System.out.println("htmlDir="+args[0]);
+            System.out.println("port="+args[1]);
+
             ProxyTaskExecutor.start();  //代理线程开始
 
             new Thread(new Runnable() {
