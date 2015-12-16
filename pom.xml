@@ -171,7 +171,38 @@
                                 <configuration>
                                     <mainClass>com.usefullc.solm.common.proxy.nio.NIOSocketServer</mainClass>
                                     <arguments>
+                                        <argument>-DhtmlDir=D:\wz</argument>
+                                        <argument>-Dport=80</argument>
                                         <argument>dev</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1.1</version>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>java</goal>
+                                </goals>
+                                <configuration>
+                                    <mainClass>com.usefullc.solm.common.proxy.nio.NIOSocketServer</mainClass>
+                                    <arguments>
+                                        <argument>-DhtmlDir=/server/project/html/wz</argument>
+                                        <argument>-Dport=80</argument>
+                                        <argument>test</argument>
                                     </arguments>
                                 </configuration>
                             </execution>
