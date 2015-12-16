@@ -1,0 +1,1 @@
+mvn compile -Ptest > log.out 2>&1 &
