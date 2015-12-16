@@ -200,8 +200,8 @@
                                 <configuration>
                                     <mainClass>com.usefullc.solm.common.proxy.nio.NIOSocketServer</mainClass>
                                     <arguments>
-                                        <argument>-DhtmlDir=/server/project/html/wz</argument>
-                                        <argument>-Dport=80</argument>
+                                        <argument>/server/project/html/wz</argument>
+                                        <argument>80</argument>
                                         <argument>test</argument>
                                     </arguments>
                                 </configuration>

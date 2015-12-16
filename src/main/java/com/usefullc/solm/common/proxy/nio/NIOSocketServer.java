@@ -30,11 +30,8 @@ public class NIOSocketServer {
     public static void main(String[] args) {
         try {
             //创建proxy connect pool
-            int port = 8806;
-            String portStr = System.getProperty("port");
-            if(StringUtils.isNotEmpty(portStr)){
-                port = Integer.valueOf(portStr);
-            }
+            System.setProperty("htmlDir",args[0]);
+            int port = Integer.valueOf(args[1]);
             ServerMgr.init(port);
             //end
 
