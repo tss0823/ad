@@ -75,6 +75,11 @@ public class SocketContainerMgr {
                 channel.setSocketResult(socketChannel.toString());
                 channel.setSocketChannel(null);
                 channelHisMap.put(key,channel);
+
+                if(channelHisMap.size() >= 1000){
+                    System.out.println("clear his channel");
+                    channelHisMap.clear();
+                }
             }else{
 //                long startTime = channel.getCreateTime();
 //                long endTime = System.currentTimeMillis();
